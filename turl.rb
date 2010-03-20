@@ -86,17 +86,27 @@ TinyURL.create_table unless TinyURL.table_exists?
 
 class MainController < Ramaze::Controller
 
-  LOGINS = {
+  USERS = {
     :admin => 'secret'
-  }.map{|k,v| ["#{k}:#{v}"].pack('m').strip} unless defined? LOGINS
+  } unless defined? USERS
+
+  LOGINS = USERS.map{|k,v| ["#{k}:#{v}"].pack('m').strip} unless defined? LOGINS
+  AUTHS = USERS.inject({}) {|h,(k,v)|
+    h.merge({k.to_s => Digest::SHA1.hexdigest(v)})} unless defined? AUTHS
 
   helper :aspect
 
-  before(:_api, :_add) do
+  helper :auth
+  trait :auth_table => AUTHS
+
+  before(:_api) do
     response['WWW-Authenticate'] = %(Basic realm="Login Required")
     respond 'Unauthorized', 401 unless auth = request.env['HTTP_AUTHORIZATION'] and
                                        LOGINS.include? auth.split.last
   end
+
+  before(:_add) { login_required }
+  before(:login){ redirect r('/') if logged_in? }
 
   layout :_page
 
