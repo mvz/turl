@@ -87,10 +87,9 @@ TinyURL.create_table unless TinyURL.table_exists?
 class MainController < Ramaze::Controller
 
   USERS = {
-    :admin => 'secret'
+    'admin' => 'secret'
   } unless defined? USERS
 
-  LOGINS = USERS.map{|k,v| ["#{k}:#{v}"].pack('m').strip} unless defined? LOGINS
   AUTHS = USERS.inject({}) {|h,(k,v)|
     h.merge({k.to_s => Digest::SHA1.hexdigest(v)})} unless defined? AUTHS
 
@@ -101,8 +100,7 @@ class MainController < Ramaze::Controller
 
   before(:_api) do
     response['WWW-Authenticate'] = %(Basic realm="Login Required")
-    respond 'Unauthorized', 401 unless auth = request.env['HTTP_AUTHORIZATION'] and
-                                       LOGINS.include? auth.split.last
+    respond 'Unauthorized', 401 unless http_authenticated?
   end
 
   before(:_add) { login_required }
@@ -154,6 +152,14 @@ class MainController < Ramaze::Controller
   </body>
 </html>
     }
+  end
+
+  private
+
+  def http_authenticated?
+    auth = request.env['HTTP_AUTHORIZATION'] and
+    (u, p = auth.split.last.unpack("m").first.split(':', 2)) and
+    USERS[u] == p
   end
 end
 
