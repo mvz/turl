@@ -41,9 +41,9 @@ class TinyURL < Sequel::Model(:turl)
   end
 
   def self.add(uri)
-    t = TinyURL.create(:url => uri)
-    return '' unless t && t.valid?
-    t.save(:validate => false)
+    t = TinyURL.new(:url => uri)
+    return nil unless t && t.valid?
+    t.save
     return t.id.to_s(36)
   end
 
@@ -51,6 +51,7 @@ class TinyURL < Sequel::Model(:turl)
     return uri if uri.length < prefix.length
     exists = TinyURL[:url => uri]
     turl = exists ? exists.id.to_s(36) : TinyURL.add(uri)
+    return nil if turl.nil?
     # 'index' is a controller name so insert the link once more
     turl = TinyURL.add(uri) if turl == 'index'
     return "#{prefix}#{turl}"
@@ -102,6 +103,7 @@ class MainController < Ramaze::Controller
   def _add
     redirect(rs()) unless request.post?
     turl = TinyURL.pack(request[:url])
+    return "Invalid input!<br/><br/>" if turl.nil?
     "Tiny URL: <a href=\"#{turl}\">#{turl}</a><br/><br/>"
   end
 
