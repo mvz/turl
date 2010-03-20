@@ -121,8 +121,8 @@ class MainController < Ramaze::Controller
   end
 
   # _api?turl=http://... will return short url
-  # _ari?url=.. will restore the original url
-  # _ari?hits=.. will return the number of hits to given turl
+  # _api?url=.. will restore the original url
+  # _api?hits=.. will return the number of hits to given turl
   def _api
     res = TinyURL.pack(request[:turl]) if request[:turl]
     res = TinyURL.unpack(request[:url].split('/').last) if request[:url]
