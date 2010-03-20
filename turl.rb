@@ -139,6 +139,7 @@ class MainController < Ramaze::Controller
   </head>
   <body>
     #@content
+    <?r if logged_in? ?>
     <form id="tinyurl" method="post" action="/_add">
       <div>
         Enter long URL:
@@ -146,6 +147,10 @@ class MainController < Ramaze::Controller
         <input type="submit" value="Pack" />
       </div>
     </form>
+    <p>#{a 'Logout', :logout}</p>
+    <?r else ?>
+    <p>#{a 'Login', :login}</p>
+    <?r end ?>
   </body>
 </html>
     }
