@@ -48,7 +48,6 @@ class TinyURL < Sequel::Model(:turl)
   end
 
   def self.pack(uri,prefix=BASE_URL)
-    return uri if uri.length < prefix.length
     exists = TinyURL[:url => uri]
     turl = exists ? exists.id.to_s(36) : TinyURL.add(uri)
     return nil if turl.nil?
