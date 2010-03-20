@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'sequel'
 require 'ramaze'
+require 'base62'
 
 DB = Sequel.sqlite('turl.db')
 BASE_URL = 'http://localhost:7000/'.freeze
@@ -40,16 +41,20 @@ class TinyURL < Sequel::Model(:turl)
     update(:created => Time.now, :hits => 1)
   end
 
+  def to_turl
+    id.base62_encode
+  end
+
   def self.add(uri)
     t = TinyURL.new(:url => uri)
     return nil unless t && t.valid?
     t.save
-    return t.id.to_s(36)
+    return t.to_turl
   end
 
   def self.pack(uri,prefix=BASE_URL)
     exists = TinyURL[:url => uri]
-    turl = exists ? exists.id.to_s(36) : TinyURL.add(uri)
+    turl = exists ? exists.to_turl : TinyURL.add(uri)
     return nil if turl.nil?
     # 'index' is a controller name so insert the link once more
     turl = TinyURL.add(uri) if turl == 'index'
@@ -57,16 +62,20 @@ class TinyURL < Sequel::Model(:turl)
   end
 
   def self.unpack(turl)
-    return nil unless t = TinyURL[:id => turl.to_i(36)]
+    return nil unless t = self.find_by_turl(turl)
     t.update(:hits => t.hits.to_i + 1)
     t.url
   end
 
   def self.count(turl)
-    return 0 unless t = TinyURL[:id => turl.to_i(36)]
+    return 0 unless t = self.find_by_turl(turl)
     t.hits
   end
 
+  def self.find_by_turl turl
+    return nil unless turl =~ /^([A-Za-z0-9])+$/
+    TinyURL[:id => turl.base62_decode]
+  end
 end
 
 TinyURL.create_table unless TinyURL.table_exists?
