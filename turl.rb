@@ -27,9 +27,13 @@ class TinyURL < Sequel::Model(:turl)
 
   validates do
     presence_of :url
-    format_of :url, :with =>
-      /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix,
-      :message => 'invalid URL'
+  end
+
+  validates_each :url do |object, attribute, value|
+    u = URI.parse(value)
+    object.errors[attribute] << 'Invalid URL' unless (
+      u.absolute? and ['http', 'https'].member?(u.scheme)
+    )
   end
 
   after_create do
