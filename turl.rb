@@ -92,7 +92,7 @@ class MainController < Ramaze::Controller
 
   helper :aspect
 
-  before(:_api) do
+  before(:_api, :_add) do
     response['WWW-Authenticate'] = %(Basic realm="Login Required")
     respond 'Unauthorized', 401 unless auth = request.env['HTTP_AUTHORIZATION'] and
                                        LOGINS.include? auth.split.last
