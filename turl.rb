@@ -86,12 +86,9 @@ TinyURL.create_table unless TinyURL.table_exists?
 
 class MainController < Ramaze::Controller
 
-  USERS = {
-    'admin' => 'secret'
-  } unless defined? USERS
-
-  AUTHS = USERS.inject({}) {|h,(k,v)|
-    h.merge({k.to_s => Digest::SHA1.hexdigest(v)})} unless defined? AUTHS
+  AUTHS = {
+    'admin' => "e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4" # Digest::SHA1.hexdigest('secret')
+  } unless defined? AUTHS
 
   helper :aspect
 
@@ -159,7 +156,7 @@ class MainController < Ramaze::Controller
   def http_authenticated?
     auth = request.env['HTTP_AUTHORIZATION'] and
     (u, p = auth.split.last.unpack("m").first.split(':', 2)) and
-    USERS[u] == p
+    AUTHS[u] == Digest::SHA1.hexdigest(p)
   end
 end
 
