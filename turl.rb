@@ -56,8 +56,8 @@ class TinyURL < Sequel::Model(:turl)
     exists = TinyURL[:url => uri]
     turl = exists ? exists.to_turl : TinyURL.add(uri)
     return nil if turl.nil?
-    # 'index' is a controller name so insert the link once more
-    turl = TinyURL.add(uri) if turl == 'index'
+    # insert the link once more if the turl value equals a controller name.
+    turl = TinyURL.add(uri) if ['index', 'login', 'logout'].member?(turl)
     return "#{prefix}#{turl}"
   end
 
