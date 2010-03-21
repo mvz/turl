@@ -1,6 +1,10 @@
 TinyURL Ramaze Application
 ===========================
 
+Fork of zh/turl. This is not a drop-in replacement, since it uses base-62
+encoding instead of base-36. Do not use this fork without converting your
+turls somehow, or fork this and change back to base-36.
+
 Required gems
 --------------
 
@@ -16,6 +20,20 @@ Features
 - url hits counting
 - API for command-line access - can shorten urls and restore the original urls
 
+Additional Features of this Fork
+--------------------------------
+
+- Use base-62 encoding for extra small URLs.
+- Adding new URLs is password protected, making this a *private* URL
+  shortener.
+
+Plans/TODO
+----------
+
+*Very* tentative.
+
+- Make private/public shortening configurable.
+- Perhaps make base used for turls configurable.
 
 Usage
 ------
