@@ -90,8 +90,6 @@ class MainController < Ramaze::Controller
     'admin' => "e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4" # Digest::SHA1.hexdigest('secret')
   } unless defined? AUTHS
 
-  helper :aspect
-
   helper :auth
   trait :auth_table => AUTHS
 
