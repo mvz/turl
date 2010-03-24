@@ -14,7 +14,7 @@ namespace :deploy do
   task :post_setup do
     sudo "mkdir -p #{deploy_to}/#{shared_dir}/db" 
     sudo "chgrp -R www-data #{deploy_to}/#{shared_dir}/db"
-    sudo "chmod 770 #{deploy_to}/#{shared_dir}/db"
+    sudo "chgrp -R www-data #{shared_path}/log"
   end
 
   task :link_db do
