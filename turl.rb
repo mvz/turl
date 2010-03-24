@@ -138,7 +138,7 @@ class MainController < Ramaze::Controller
   <body>
     #@content
     <?r if logged_in? ?>
-    <form id="tinyurl" method="post" action="/_add">
+    <form id="tinyurl" method="post" action="#{r(:_add)}">
       <div>
         Enter long URL:
         <input id="url" name="url" type="text" />
