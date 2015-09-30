@@ -1,0 +1,6 @@
+
+turl: [ramaze] Uses base-36 instead of base-62. Has password, but only for API.
+i5be: [sinatra] base-62, no passwords, does not store visits.
+rubyurl: [rails] stores visits. random base-62 token. big, uses rails 2.1
+shorten: [sinatra] complexer design, exchangeable shortening algorithms.
+url: [sinatra] uses paging ... 
