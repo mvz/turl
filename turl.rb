@@ -137,7 +137,7 @@ class MainController < Ramaze::Controller
     <title>TinyURL Service</title>
   </head>
   <body>
-    #@content
+    #{@content}
     <?r if logged_in? ?>
     <form id="tinyurl" method="post" action="#{r(:_add)}">
       <div>
