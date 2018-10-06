@@ -64,14 +64,14 @@ class TinyURL < Sequel::Model(:turl)
   end
 
   def self.unpack(turl)
-    return nil unless t = find_by_turl(turl)
+    t = find_by_turl(turl) or return nil
 
     t.update(hits: t.hits.to_i + 1)
     t.url
   end
 
   def self.count(turl)
-    return 0 unless t = find_by_turl(turl)
+    t = find_by_turl(turl) or return 0
 
     t.hits
   end

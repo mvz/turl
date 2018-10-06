@@ -1,0 +1,3 @@
+# Allow and/or for control flow only
+Style/AndOr:
+  EnforcedStyle: conditionals
