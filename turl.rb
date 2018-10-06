@@ -87,7 +87,7 @@ TinyURL.create_table unless TinyURL.table_exists?
 class MainController < Ramaze::Controller
 
   AUTHS = {
-    'admin' => "e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4" # Digest::SHA1.hexdigest('secret')
+    'admin' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4' # Digest::SHA1.hexdigest('secret')
   } unless defined? AUTHS
 
   helper :auth
@@ -108,13 +108,13 @@ class MainController < Ramaze::Controller
       url = TinyURL.unpack(turl)
       redirect(url ? url : rs())
     end
-    ""
+    ''
   end
 
   def _add
     redirect(rs()) unless request.post?
     turl = TinyURL.pack(request[:url])
-    return "Invalid input!<br/><br/>" if turl.nil?
+    return 'Invalid input!<br/><br/>' if turl.nil?
     "Tiny URL: <a href=\"#{turl}\">#{turl}</a><br/><br/>"
   end
 
@@ -158,7 +158,7 @@ class MainController < Ramaze::Controller
 
   def http_authenticated?
     auth = request.env['HTTP_AUTHORIZATION'] and
-    (u, p = auth.split.last.unpack("m").first.split(':', 2)) and
+    (u, p = auth.split.last.unpack('m').first.split(':', 2)) and
     AUTHS[u] == Digest::SHA1.hexdigest(p)
   end
 end

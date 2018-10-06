@@ -4,5 +4,5 @@ task :default => :test
 
 desc 'Run specs'
 task :test do
-  p "done."
+  p 'done.'
 end

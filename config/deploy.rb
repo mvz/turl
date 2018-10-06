@@ -1,14 +1,14 @@
-set :application, "turl"
-set :repository,  "."
+set :application, 'turl'
+set :repository,  '.'
 
 set :scm, :git
 
 set :deploy_via, :copy
 set :copy_strategy, :export
 
-role :app, "your app-server here"
-role :web, "your web-server here"
-role :db,  "your db-server here", :primary => true
+role :app, 'your app-server here'
+role :web, 'your web-server here'
+role :db,  'your db-server here', :primary => true
 
 namespace :deploy do
   task :post_setup do
@@ -27,4 +27,4 @@ namespace :deploy do
   end
 end
 
-after "deploy:update_code", "deploy:link_db"
+after 'deploy:update_code', 'deploy:link_db'
