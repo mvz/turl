@@ -137,7 +137,7 @@ class MainController < Ramaze::Controller
   end
 
   def _page
-    %{
+    %(
 <html>
   <head>
     <title>TinyURL Service</title>
@@ -158,7 +158,7 @@ class MainController < Ramaze::Controller
     <?r end ?>
   </body>
 </html>
-    }
+    )
   end
 
   private
