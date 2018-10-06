@@ -105,7 +105,7 @@ class MainController < Ramaze::Controller
   end
 
   before(:_add) { login_required }
-  before(:login){ redirect r('/') if logged_in? }
+  before(:login) { redirect r('/') if logged_in? }
 
   layout :_page
 
