@@ -7,7 +7,7 @@ require 'ramaze'
 require 'base62'
 
 DB = Sequel.sqlite('turl.db')
-BASE_URL = 'http://localhost:7000/'.freeze
+BASE_URL = 'http://localhost:7000/'
 
 Sequel::Model.plugin(:schema)
 Sequel::Model.plugin(:hook_class_methods)
