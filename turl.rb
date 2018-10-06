@@ -34,7 +34,7 @@ class TinyURL < Sequel::Model(:turl)
   validates_each :url do |object, attribute, value|
     u = URI.parse(value)
     object.errors[attribute] << 'Invalid URL' unless 
-      u.absolute? and ['http', 'https'].member?(u.scheme)
+      u.absolute? && ['http', 'https'].member?(u.scheme)
     
   end
 
@@ -165,9 +165,9 @@ class MainController < Ramaze::Controller
   private
 
   def http_authenticated?
-    auth = request.env['HTTP_AUTHORIZATION'] and
-    (u, p = auth.split.last.unpack1('m').split(':', 2)) and
-    AUTHS[u] == Digest::SHA1.hexdigest(p)
+    (auth = request.env['HTTP_AUTHORIZATION']) &&
+    (u, p = auth.split.last.unpack1('m').split(':', 2)) &&
+    (AUTHS[u] == Digest::SHA1.hexdigest(p))
   end
 end
 
