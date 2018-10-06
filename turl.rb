@@ -108,7 +108,7 @@ class MainController < Ramaze::Controller
 
   layout :_page
 
-  def index(turl = nil, *params)
+  def index(turl = nil, *_params)
     if turl
       url = TinyURL.unpack(turl)
       redirect(url || rs())
