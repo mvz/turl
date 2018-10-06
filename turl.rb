@@ -113,13 +113,13 @@ class MainController < Ramaze::Controller
   def index(turl = nil, *_params)
     if turl
       url = TinyURL.unpack(turl)
-      redirect(url || rs())
+      redirect(url || rs)
     end
     ''
   end
 
   def _add
-    redirect(rs()) unless request.post?
+    redirect(rs) unless request.post?
     turl = TinyURL.pack(request[:url])
     return 'Invalid input!<br/><br/>' if turl.nil?
 
