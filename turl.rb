@@ -34,7 +34,7 @@ class TinyURL < Sequel::Model(:turl)
   validates_each :url do |object, attribute, value|
     u = URI.parse(value)
     object.errors[attribute] << 'Invalid URL' unless
-      u.absolute? && ['http', 'https'].member?(u.scheme)
+      u.absolute? && %w[http https].member?(u.scheme)
   end
 
   after_create do
@@ -59,7 +59,7 @@ class TinyURL < Sequel::Model(:turl)
     return nil if turl.nil?
 
     # insert the link once more if the turl value equals a controller name.
-    turl = TinyURL.add(uri) if ['index', 'login', 'logout'].member?(turl)
+    turl = TinyURL.add(uri) if %w[index login logout].member?(turl)
     "#{prefix}#{turl}"
   end
 
