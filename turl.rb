@@ -47,7 +47,7 @@ class TinyURL < Sequel::Model(:turl)
 
   def self.add(uri)
     t = TinyURL.new(url: uri)
-    return nil unless t && t.valid?
+    return nil unless t&.valid?
 
     t.save
     t.to_turl
