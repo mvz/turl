@@ -12,14 +12,14 @@ role :db,  "your db-server here", :primary => true
 
 namespace :deploy do
   task :post_setup do
-    sudo "mkdir -p #{deploy_to}/#{shared_dir}/db" 
+    sudo "mkdir -p #{deploy_to}/#{shared_dir}/db"
     sudo "chgrp -R www-data #{deploy_to}/#{shared_dir}/db"
     sudo "chgrp -R www-data #{shared_path}/log"
   end
 
   task :link_db do
-    # Link in the database 
-    run "ln -nfs #{shared_path}/db/turl.db #{current_release}/turl.db" 
+    # Link in the database
+    run "ln -nfs #{shared_path}/db/turl.db #{current_release}/turl.db"
   end
 
   task :restart do
