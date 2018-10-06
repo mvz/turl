@@ -54,7 +54,7 @@ class TinyURL < Sequel::Model(:turl)
     t.to_turl
   end
 
-  def self.pack(uri,prefix=BASE_URL)
+  def self.pack(uri,prefix = BASE_URL)
     exists = TinyURL[url: uri]
     turl = exists ? exists.to_turl : TinyURL.add(uri)
     return nil if turl.nil?
@@ -108,7 +108,7 @@ class MainController < Ramaze::Controller
 
   layout :_page
 
-  def index turl=nil, *params
+  def index turl = nil, *params
     if turl
       url = TinyURL.unpack(turl)
       redirect(url ? url : rs())
