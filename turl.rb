@@ -165,8 +165,8 @@ class MainController < Ramaze::Controller
 
   def http_authenticated?
     (auth = request.env['HTTP_AUTHORIZATION']) &&
-    (u, p = auth.split.last.unpack1('m').split(':', 2)) &&
-    (AUTHS[u] == Digest::SHA1.hexdigest(p))
+      (u, p = auth.split.last.unpack1('m').split(':', 2)) &&
+      (AUTHS[u] == Digest::SHA1.hexdigest(p))
   end
 end
 
