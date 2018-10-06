@@ -1,6 +1,6 @@
 require 'rake/clean'
 
-task :default => :test
+task default: :test
 
 desc 'Run specs'
 task :test do

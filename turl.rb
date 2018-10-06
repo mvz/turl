@@ -21,7 +21,7 @@ class TinyURL < Sequel::Model(:turl)
     varchar     :url
     integer     :hits
     timestamp   :created
-    index [:url], :unique => true
+    index [:url], unique: true
     index [:created]
     index [:hits]
   end
@@ -38,7 +38,7 @@ class TinyURL < Sequel::Model(:turl)
   end
 
   after_create do
-    update(:created => Time.now, :hits => 1)
+    update(created: Time.now, hits: 1)
   end
 
   def to_turl
@@ -46,14 +46,14 @@ class TinyURL < Sequel::Model(:turl)
   end
 
   def self.add(uri)
-    t = TinyURL.new(:url => uri)
+    t = TinyURL.new(url: uri)
     return nil unless t && t.valid?
     t.save
     return t.to_turl
   end
 
   def self.pack(uri,prefix=BASE_URL)
-    exists = TinyURL[:url => uri]
+    exists = TinyURL[url: uri]
     turl = exists ? exists.to_turl : TinyURL.add(uri)
     return nil if turl.nil?
     # insert the link once more if the turl value equals a controller name.
@@ -63,7 +63,7 @@ class TinyURL < Sequel::Model(:turl)
 
   def self.unpack(turl)
     return nil unless t = self.find_by_turl(turl)
-    t.update(:hits => t.hits.to_i + 1)
+    t.update(hits: t.hits.to_i + 1)
     t.url
   end
 
@@ -74,7 +74,7 @@ class TinyURL < Sequel::Model(:turl)
 
   def self.find_by_turl turl
     return nil unless turl =~ /^([A-Za-z0-9])+$/
-    TinyURL[:id => turl.base62_decode]
+    TinyURL[id: turl.base62_decode]
   end
 end
 
@@ -91,7 +91,7 @@ class MainController < Ramaze::Controller
   } unless defined? AUTHS
 
   helper :auth
-  trait :auth_table => AUTHS
+  trait auth_table: AUTHS
 
   before(:_api) do
     response['WWW-Authenticate'] = %(Basic realm="Login Required")
@@ -168,8 +168,8 @@ if __FILE__ == $0
   Ramaze::Log.loggers = [Logger.new('turl.log')]
   begin
     require 'mongrel'
-    Ramaze.start :adapter => :mongrel, :port => 7000
+    Ramaze.start adapter: :mongrel, port: 7000
   rescue LoadError
-    Ramaze.start :adapter => :webrick, :port => 7000
+    Ramaze.start adapter: :webrick, port: 7000
   end
 end

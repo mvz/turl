@@ -8,7 +8,7 @@ set :copy_strategy, :export
 
 role :app, 'your app-server here'
 role :web, 'your web-server here'
-role :db,  'your db-server here', :primary => true
+role :db,  'your db-server here', primary: true
 
 namespace :deploy do
   task :post_setup do
