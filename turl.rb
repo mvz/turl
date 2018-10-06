@@ -165,7 +165,7 @@ class MainController < Ramaze::Controller
 end
 
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   Ramaze::Log.loggers = [Logger.new('turl.log')]
   begin
     require 'mongrel'
