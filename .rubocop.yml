@@ -1,0 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
+# Allow and/or for control flow only
+Style/AndOr:
+  EnforcedStyle: conditionals
