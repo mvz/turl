@@ -91,9 +91,11 @@ TinyURL.create_table unless TinyURL.table_exists?
 #
 
 class MainController < Ramaze::Controller
-  AUTHS = {
-    'admin' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4' # Digest::SHA1.hexdigest('secret')
-  }.freeze unless defined? AUTHS
+  unless defined? AUTHS
+    AUTHS = {
+      'admin' => 'e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4' # Digest::SHA1.hexdigest('secret')
+    }.freeze
+  end
 
   helper :auth
   trait auth_table: AUTHS
