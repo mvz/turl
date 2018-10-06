@@ -77,7 +77,7 @@ class TinyURL < Sequel::Model(:turl)
     t.hits
   end
 
-  def self.find_by_turl turl
+  def self.find_by_turl(turl)
     return nil unless turl =~ /^([A-Za-z0-9])+$/
 
     TinyURL[id: turl.base62_decode]
@@ -108,7 +108,7 @@ class MainController < Ramaze::Controller
 
   layout :_page
 
-  def index turl = nil, *params
+  def index(turl = nil, *params)
     if turl
       url = TinyURL.unpack(turl)
       redirect(url ? url : rs())
