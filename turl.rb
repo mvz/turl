@@ -131,7 +131,7 @@ class MainController < Ramaze::Controller
     res = TinyURL.pack(request[:turl]) if request[:turl]
     res = TinyURL.unpack(request[:url].split('/').last) if request[:url]
     res = TinyURL.count(request[:hits].split('/').last).to_s if request[:hits]
-    res = '' unless res
+    res ||= ''
     respond res
   end
 
