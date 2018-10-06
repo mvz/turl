@@ -33,9 +33,9 @@ class TinyURL < Sequel::Model(:turl)
 
   validates_each :url do |object, attribute, value|
     u = URI.parse(value)
-    object.errors[attribute] << 'Invalid URL' unless 
+    object.errors[attribute] << 'Invalid URL' unless
       u.absolute? && ['http', 'https'].member?(u.scheme)
-    
+
   end
 
   after_create do
