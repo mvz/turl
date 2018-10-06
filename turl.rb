@@ -51,7 +51,7 @@ class TinyURL < Sequel::Model(:turl)
     return nil unless t && t.valid?
 
     t.save
-    return t.to_turl
+    t.to_turl
   end
 
   def self.pack(uri,prefix=BASE_URL)
@@ -61,7 +61,7 @@ class TinyURL < Sequel::Model(:turl)
 
     # insert the link once more if the turl value equals a controller name.
     turl = TinyURL.add(uri) if ['index', 'login', 'logout'].member?(turl)
-    return "#{prefix}#{turl}"
+    "#{prefix}#{turl}"
   end
 
   def self.unpack(turl)
